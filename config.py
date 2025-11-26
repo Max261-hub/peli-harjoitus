@@ -16,6 +16,7 @@ voitto_saannot = {
     "Paperi": ["Kivi"]
 }
 
+
 # ============================================
 # TEKSTIT
 # ============================================
@@ -23,3 +24,11 @@ voitto_saannot = {
 Teksti_tervehdy = "Tervetuloa pelaamaan Kivi-Sakset-Paperia! Kirjoita 'lopeta' lopettaaksesi pelin."
 Teksti_kehote = "Valitse Kivi, Sakset tai Paperi: "
 Teksti_virhe_ilmoitus = "Virheellinen valinta! Valitse Kivi, Sakset tai Paperi."
+
+
+#===============================================
+# Tilasto Asetukset
+#===============================================
+
+#Tilastotiedoston nimi
+stats_file = "konsoli_tilastot.json"
