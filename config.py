@@ -31,4 +31,4 @@ Teksti_virhe_ilmoitus = "Virheellinen valinta! Valitse Kivi, Sakset tai Paperi."
 #===============================================
 
 #Tilastotiedoston nimi
-stats_file = "konsoli_tilastot.json"
+STATS_FILE = "konsoli_tilastot.json"

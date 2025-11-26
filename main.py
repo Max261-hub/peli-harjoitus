@@ -5,15 +5,16 @@ import sys
 from config import valinta, Teksti_tervehdy, Teksti_kehote, Teksti_virhe_ilmoitus
 # Tuodaan logiikka game_logic.py tiedostosta
 from game_logic import get_tietokone_valinta, determine_voittaja
+# Tuo uusi luokka
+from stats import StatsManager # Lisätty
 
 def main():
-    """
-    Pelin pääfunktio, joka sisältää pelin käynnissä pitävän silmukan.
-    """
-    # 5. LISÄTÄÄN PISTEIDEN LASKEJAT (Tehtävä #5)
-    pelaaja_voitto = 0
-    tietokone_voitto = 0
-    tasa = 0
+    # Pelin pääfunktio, joka sisältää pelin käynnissä pitävän silmukan.
+    
+    # aloitetaan tilastojen hallinta
+    stats_manager = StatsManager() # Lisätty
+    
+    # Vanhat pisteiden alustukst poistetiin tästä, StatsManager hoittaa ne
     
     print("=" * 30)
     print(Teksti_tervehdy)
@@ -23,7 +24,7 @@ def main():
     # while True pitää pelin käynnissä, kunnes käyttäjä kirjoittaa 'lopeta'
     while True:
         # Näytetään nykyiset pisteet ennen kierrosta
-        print(f"\n🏆 Pisteet: Pelaaja {pelaaja_voitto} - Tietokone {tietokone_voitto} - Tasapelit {tasa}")
+        print(stats_manager.get_stats_teksti().strip()) # Lisätty (strip() siistii rivinvaihtoja)
         print("-" * 30)
         
         # 1. Käyttäjän valinta
@@ -42,9 +43,7 @@ def main():
         # KÄYTETÄÄN LISTOJA JA EHTOLAUSEITA
         if pelaajan_valinta not in valinta:
             print(Teksti_virhe_ilmoitus)
-            continue # Jatka seuraavaan silmukan kierrokseen (hyppää takaisin alkuun)
-            
-        # 4. Tietokoneen valinta
+            continue # Jatka seuraavaan silmukan kierrokseen (hyppää 
         tietokone_valinta = get_tietokone_valinta()
         
         print(f"Sinun valintasi: {pelaajan_valinta}")
@@ -56,18 +55,19 @@ def main():
         # 6. Päivitä pisteet ja ilmoita tulos (Tehtävä #5)
         if tulos == "Voitto":
             print("🎉 Voitit kierroksen!")
-            pelaaja_voitto += 1 # KÄYTETÄÄN MUUTTUJIA
         elif tulos == "Häviö":
             print("🙁 Hävisit kierroksen.")
-            tietokone_voitto += 1 # KÄYTETÄÄN MUUTTUJIA
         else: # tasapeli
             print("🤝 Tasapeli!")
-            tasa += 1 # KÄYTETÄÄN MUUTTUJIA
+            
+        # Päivittä tilastot json- tiedostoon
+        stats_manager.update_stats(tulos) # Lisätty
             
     # Silmukan loputtua tulostetaan yhteenveto
     print("\n" + "=" * 30)
     print("PELI PÄÄTTYI")
-    print(f"Lopulliset pisteet: Pelaaja {pelaaja_voitto} - Tietokone {tietokone_voitto}")
+    # Lopulliset tilastot
+    print(stats_manager.get_stats_teksti()) # Lisätty
     print("=" * 30)
     
 if __name__ == "__main__":
